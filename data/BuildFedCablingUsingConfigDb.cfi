@@ -1,0 +1,15 @@
+es_source BuildFedCablingUsingConfigDb = SiStripFedCablingBuilderFromDb {
+	untracked    bool UsingDb         = true
+	untracked  string User            = ""
+	untracked  string Passwd          = ""
+	untracked  string Path            = ""
+	untracked  string Partition       = ""
+}
+
+// untracked bool UsingDb:		[default=true]	switch between using configuration database or xml files
+// untracked string User:		[default=""]	username for database account (used if UsingDb=true)
+// untracked string Passwd:		[default=""]	password for database account (used if UsingDb=true)
+// untracked string Path:		[default=""]	path for database account (used if UsingDb=true)
+// untracked string Partition:		[default=""]	partition for database account (used if UsingDb=true)
+
+
