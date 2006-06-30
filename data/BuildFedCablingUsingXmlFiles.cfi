@@ -1,20 +1,21 @@
 es_source BuildFedCablingUsingXmlFiles = SiStripFedCablingBuilderFromDb {
-	untracked    bool UsingDb         = false
-	untracked  string InputModuleXml  = ""
-	untracked  string InputDcuInfoXml = ""
-	untracked vstring InputFecXml     = { "" }
-	untracked vstring InputFedXml     = { "" }
+	untracked    bool UsingDb          = false
+	untracked  string InputModuleXml   = ""
+	untracked  string InputDcuInfoXml  = ""
+	untracked vstring InputFecXml      = { "" }
+	untracked vstring InputFedXml      = { "" }
+	untracked  string OutputModuleXml  = "/tmp/module.xml"
+	untracked  string OutputDcuInfoXml = "/tmp/dcuinfo.xml"
+	untracked  string OutputFecXml     = "/tmp/fec.xml"
+	untracked  string OutputFedXml     = "/tmp/fed.xml"
 }
 
-// untracked bool UsingDb:		[default=true]	switch between using configuration database or xml files
-// untracked string User:		[default=""]	username for database account (used if UsingDb=true)
-// untracked string Passwd:		[default=""]	password for database account (used if UsingDb=true)
-// untracked string Path:		[default=""]	path for database account (used if UsingDb=true)
-// untracked string Partition:		[default=""]	partition for database account (used if UsingDb=true)
-// untracked string InputModuleXml:	[default=""]	xml file containing HW connection info (used if UsingDb=false)
-// untracked string InputDcuInfoXml:	[default=""]	xml file containing DCU - DetId map (used if UsingDb=false)
-// untracked vstring InputFecXml:	[default=""]	xml file(s) containing control info (used if UsingDb=false)
-// untracked vstring InputFedXml:	[default=""]	xml file(s) containing readout info (used if UsingDb=false)
-
-
-
+// untracked bool UsingDb:		[default=true]			switch between using configuration database or xml files
+// untracked string InputModuleXml:	[default=""]			input xml file containing HW connection info (used if UsingDb=false)
+// untracked string InputDcuInfoXml:	[default=""]			input xml file containing DCU - DetId map (used if UsingDb=false)
+// untracked vstring InputFecXml:	[default=""]			input xml file(s) containing control info (used if UsingDb=false)
+// untracked vstring InputFedXml:	[default=""]			input xml file(s) containing readout info (used if UsingDb=false)
+// untracked string OutputModuleXml:	[default="/tmp/module.xml"]	output xml file containing HW connection info (used if UsingDb=false)
+// untracked string OutputDcuInfoXml:	[default="/tmp/dcuinfo.xml"]	output xml file containing DCU - DetId map (used if UsingDb=false)
+// untracked string OutputFecXml:	[default="/tmp/fec.xml"]	output xml file containing control info (used if UsingDb=false)
+// untracked string OutputFedXml:	[default="/tmp/fed.xml"]	output xml file containing readout info (used if UsingDb=false)

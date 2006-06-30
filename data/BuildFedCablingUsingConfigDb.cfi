@@ -11,9 +11,5 @@ es_source BuildFedCablingUsingConfigDb = SiStripFedCablingBuilderFromDb {
 // untracked string Passwd:		[default=""]	password for database account (used if UsingDb=true)
 // untracked string Path:		[default=""]	path for database account (used if UsingDb=true)
 // untracked string Partition:		[default=""]	partition for database account (used if UsingDb=true)
-// untracked string InputModuleXml:	[default=""]	xml file containing HW connection info (used if UsingDb=false)
-// untracked string InputDcuInfoXml:	[default=""]	xml file containing DCU - DetId map (used if UsingDb=false)
-// untracked vstring InputFecXml:	[default=""]	xml file(s) containing control info (used if UsingDb=false)
-// untracked vstring InputFedXml:	[default=""]	xml file(s) containing readout info (used if UsingDb=false)
 
 
