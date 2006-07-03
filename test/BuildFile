@@ -1,0 +1,18 @@
+<environment>
+  <use name=FWCore/Framework>
+  <use name=FWCore/ParameterSet>
+  <use name=FWCore/MessageLogger> 
+  <use name=CondFormats/SiStripObjects>
+  <use name=CalibFormats/SiStripObjects>
+  <use name=DataFormats/DetId>
+  <use name=Geometry/Records>
+  <use name=Geometry/CommonTopologies>
+  <use name=Geometry/TrackerGeometryBuilder>
+  <use name=DataFormats/SiStripDetId>
+  <use name=OnlineDB/SiStripConfigDb>
+  <use name=boost>
+  <library name=testOnlineDBSiStripESSources file=*.cc>
+    <flags SEAL_PLUGIN_NAME="testOnlineDBSiStripESSources">
+  </library>
+</environment>
+

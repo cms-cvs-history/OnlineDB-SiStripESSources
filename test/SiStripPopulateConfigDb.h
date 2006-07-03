@@ -1,5 +1,5 @@
-#ifndef OnlineDB_SiStripESSources_SiStripPopulateConfigDb_H
-#define OnlineDB_SiStripESSources_SiStripPopulateConfigDb_H
+#ifndef OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
+#define OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
 
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EventSetup.h"
@@ -44,8 +44,10 @@ class SiStripPopulateConfigDb : public edm::EDAnalyzer {
   SiStripConfigDb* db_;
   
   uint32_t maxNumberOfDets_;
+
+  uint16_t chansPerFed_;
   
 };
 
-#endif // OnlineDB_SiStripESSources_SiStripPopulateConfigDb_H
+#endif // OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
 

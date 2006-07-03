@@ -1,4 +1,4 @@
-#include "OnlineDB/SiStripESSources/interface/SiStripPopulateConfigDb.h"
+#include "OnlineDB/SiStripESSources/test/SiStripPopulateConfigDb.h"
 // 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 //
@@ -16,8 +16,6 @@
 #include "Geometry/TrackerGeometryBuilder/interface/StripGeomDetType.h"
 #include "Geometry/TrackerGeometryBuilder/interface/StripGeomDetUnit.h"
 //
-//#include "OnlineDB/SiStripESSources/interface/SiStripFedCablingBuilderFromDb.h"
-// 
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -28,10 +26,14 @@ using namespace std;
 /** */
 SiStripPopulateConfigDb::SiStripPopulateConfigDb( const edm::ParameterSet& pset ) 
   : db_(0),
-    maxNumberOfDets_( pset.getUntrackedParameter<int>("MaxNumberOfDets",10) )
+    maxNumberOfDets_( pset.getUntrackedParameter<int>("MaxNumberOfDets",10) ),
+    chansPerFed_( pset.getUntrackedParameter<int>("ChannelsPerFed",96) )
 {
   edm::LogInfo("SiStripConfigDb") << "[SiStripPopulateConfigDb::SiStripPopulateConfigDb]"
 				  << " Constructing object...";
+
+  if ( chansPerFed_ > 96 ) { chansPerFed_ = 96; }
+
   if ( pset.getUntrackedParameter<bool>( "UsingDb", false ) ) {
     // Using database 
     db_ = new SiStripConfigDb( pset.getUntrackedParameter<string>("User",""),
@@ -45,10 +47,10 @@ SiStripPopulateConfigDb::SiStripPopulateConfigDb( const edm::ParameterSet& pset 
 			       pset.getUntrackedParameter< vector<string> >( "InputFecXml", vector<string>() ),
 			       pset.getUntrackedParameter< vector<string> >( "InputFedXml", vector<string>() ) );
   }
-
+  
   // Establish connection
   db_->openDbConnection();
-
+  
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +278,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 	  for ( vector<SiStripModule>::const_iterator imod = iccu->modules().begin(); imod != iccu->modules().end(); imod++ ) {
 
 	    // Set "dummy" FED id / channel
-	    if ( 96-fed_ch < imod->nApvPairs() ) { fed_id++; fed_ch = 0; } // move to next FED
+	    if ( chansPerFed_-fed_ch < imod->nApvPairs() ) { fed_id++; fed_ch = 0; } // move to next FED
 	    for ( uint16_t ipair = 0; ipair < imod->nApvPairs(); ipair++ ) {
 	      pair<uint16_t,uint16_t> addr = imod->activeApvPair( (*imod).lldChannel(ipair) );
 	      pair<uint16_t,uint16_t> fed_channel = pair<uint16_t,uint16_t>( fed_id, fed_ch );
