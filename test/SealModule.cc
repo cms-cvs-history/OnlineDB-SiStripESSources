@@ -4,3 +4,7 @@ DEFINE_SEAL_MODULE();
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "OnlineDB/SiStripESSources/test/SiStripPopulateConfigDb.h"
 DEFINE_ANOTHER_FWK_MODULE(SiStripPopulateConfigDb)
+
+#include "FWCore/Framework/interface/SourceFactory.h"
+#include "OnlineDB/SiStripESSources/test/SiStripFedCablingBuilderToCondDb.h"
+DEFINE_ANOTHER_FWK_EVENTSETUP_SOURCE(SiStripFedCablingBuilderToCondDb)
