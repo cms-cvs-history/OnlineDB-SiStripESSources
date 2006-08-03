@@ -1,0 +1,8 @@
+es_source FedCablingFromExampleSqliteFile = PoolDBESSource { 
+	           VPSet toGet            = { { string record = "SiStripFedCablingRcd" string tag = "test" } }
+	          string connect          = "sqlite_file:/afs/cern.ch/cms/cmt/onlinedev/data/examples/SiStripFedCabling.db"
+	untracked string catalog          = "file:/afs/cern.ch/cms/cmt/onlinedev/data/examples/SiStripFedCabling.xml"
+	          string timetype         = "endoftime" 
+	untracked uint32 messagelevel     = 3
+}
+

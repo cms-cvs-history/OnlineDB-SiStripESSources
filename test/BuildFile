@@ -3,6 +3,7 @@
 <use name=FWCore/Utilities>
 <use name=FWCore/MessageLogger>
 <use name=CondCore/DBOutputService>
+<use name=CondFormats/DataRecord>
 <use name=CondFormats/SiStripObjects>
 <use name=CalibFormats/SiStripObjects>
 <use name=CalibTracker/SiStripConnectivity>
@@ -25,6 +26,7 @@
   <use name=FWCore/Utilities>
   <use name=FWCore/MessageLogger>
   <use name=CondCore/DBOutputService>
+  <use name=CondFormats/DataRecord>
   <use name=CondFormats/SiStripObjects>
   <use name=CalibFormats/SiStripObjects>
   <use name=CalibTracker/SiStripConnectivity>

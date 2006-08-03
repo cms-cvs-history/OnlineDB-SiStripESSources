@@ -1,9 +1,9 @@
-es_source BuildFedCablingUsingConfigDb = SiStripFedCablingBuilderFromDb {
+es_source FedCablingFromMtccConfigDb = SiStripFedCablingBuilderFromDb {
 	untracked    bool UsingDb         = true
-	untracked  string User            = ""
-	untracked  string Passwd          = ""
-	untracked  string Path            = ""
-	untracked  string Partition       = ""
+	untracked  string User            = "cms_mtcc_sitracker"
+	untracked  string Passwd          = "cms_mtcc"
+	untracked  string Path            = "omds"
+	untracked  string Partition       = "MTCC_TESTCI_NEW"
 	untracked  uint32 MajorVersion    = 0
 	untracked  uint32 MinorVersion    = 0
 }
