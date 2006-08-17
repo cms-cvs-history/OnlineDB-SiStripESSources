@@ -7,4 +7,3 @@ DEFINE_ANOTHER_FWK_MODULE(SiStripPopulateConfigDb)
 
 #include "OnlineDB/SiStripESSources/test/SiStripAnalyzeFedCabling.h"
 DEFINE_ANOTHER_FWK_MODULE(SiStripAnalyzeFedCabling)
-
