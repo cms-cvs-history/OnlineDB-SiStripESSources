@@ -160,10 +160,10 @@ void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
       } else if ( det.det() == 1 &&        // Tracker detector
 		  det.subdetId() == 6 ) {  // TEC sub-detector
 	TECDetId tec( det_id );
-	if ( tec.petal()[0] == 1 ) {       // TEC forward petal
+	if ( tec.side() == 1 ) {           // TEC- (backward)
 	  partitions[2].second.push_back( data );
 	  name = partitions[2].first;
-	} else if ( tec.petal()[0] == 0 ) { // TEC backward petal
+	} else if ( tec.side() == 2 ) {    // TEC+ (forward)
 	  partitions[3].second.push_back( data );
 	  name = partitions[3].first;
 	}
