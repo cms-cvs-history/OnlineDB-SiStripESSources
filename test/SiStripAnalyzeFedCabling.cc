@@ -76,4 +76,22 @@ void SiStripAnalyzeFedCabling::analyze( const edm::Event& event,
     << __PRETTY_FUNCTION__
     << " Analyzing run " << event.id().run() 
     << " and event " << event.id().event();
+
+
+  // Retrieve FED cabling
+  edm::ESHandle<SiStripFedCabling> fed_cabling;
+  setup.get<SiStripFedCablingRcd>().get( fed_cabling ); 
+
+  // Iterate through connections
+  vector<uint16_t>::const_iterator ifed = fed_cabling->feds().begin();
+  for ( ; ifed != fed_cabling->feds().end(); ifed++ ) {
+    const vector<FedChannelConnection>& conns = fed_cabling->connections( *ifed ); 
+    vector<FedChannelConnection>::const_iterator ichan = conns.begin();
+    for ( ; ichan != conns.end(); ichan++ ) { 
+      if ( ichan->fedId() ) {
+	//@@ anything here?
+      }
+    } 
+  } 
+
 }
