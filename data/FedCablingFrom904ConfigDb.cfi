@@ -1,11 +1,11 @@
 es_source FedCablingFromMtccConfigDb = SiStripFedCablingBuilderFromDb {
-        untracked    bool UsingDb         = true
-        untracked  string User            = "cms_testBeam"
-        untracked  string Passwd          = "May2004"
-        untracked  string Path            = "cmsr"
-        untracked  string Partition       = "TEL2FEDLTC"
-        untracked  uint32 MajorVersion    = 0
-        untracked  uint32 MinorVersion    = 0
+    untracked bool UsingDb = true
+    untracked string User = "cms_testBeam"
+    untracked string Passwd = "May2004"
+    untracked string Path = "cmsr"
+    untracked string Partition = "TEL2FEDLTC"
+    untracked uint32 MajorVersion = 0
+    untracked uint32 MinorVersion = 0
 }
 
 // untracked bool UsingDb:              [default=true]  switch between using configuration database or xml files
