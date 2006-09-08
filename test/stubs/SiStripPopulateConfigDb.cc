@@ -1,4 +1,4 @@
-#include "OnlineDB/SiStripESSources/test/SiStripPopulateConfigDb.h"
+#include "OnlineDB/SiStripESSources/test/stubs/SiStripPopulateConfigDb.h"
 // 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 //

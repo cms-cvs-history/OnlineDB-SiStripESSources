@@ -1,4 +1,4 @@
-#include "OnlineDB/SiStripESSources/test/SiStripAnalyzeFedCabling.h"
+#include "OnlineDB/SiStripESSources/test/stubs/SiStripAnalyzeFedCabling.h"
 //
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/Framework/interface/Handle.h"
