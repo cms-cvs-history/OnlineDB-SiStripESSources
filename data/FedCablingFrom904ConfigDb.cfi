@@ -1,4 +1,4 @@
-es_source FedCablingFromMtccConfigDb = SiStripFedCablingBuilderFromDb {
+es_source FedCablingFrom904ConfigDb = SiStripFedCablingBuilderFromDb {
     untracked bool UsingDb = true
     untracked string User = "cms_testBeam"
     untracked string Passwd = "May2004"
