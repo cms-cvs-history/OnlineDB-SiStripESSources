@@ -1,7 +1,7 @@
 es_source FedCablingFromExampleXmlFile = SiStripFedCablingBuilderFromDb {
     untracked bool UsingDb = false
     untracked string InputModuleXml = "/afs/cern.ch/cms/cmt/onlinedev/data/examples/module.xml"
-    untracked string InputDcuInfoXml = ""
+    untracked string InputDcuInfoXml = "/afs/cern.ch/cms/cmt/onlinedev/data/examples/dcuinfo.xml"
     untracked vstring InputFecXml = { "" }
     untracked vstring InputFedXml = { "" }
     untracked string OutputModuleXml = "/tmp/module.xml"
