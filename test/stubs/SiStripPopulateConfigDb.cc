@@ -1,5 +1,6 @@
 #include "OnlineDB/SiStripESSources/test/stubs/SiStripPopulateConfigDb.h"
 // 
+#include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 //
 #include "CondFormats/SiStripObjects/interface/SiStripFedCabling.h"
