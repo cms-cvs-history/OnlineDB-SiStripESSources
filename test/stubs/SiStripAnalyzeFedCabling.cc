@@ -16,33 +16,15 @@
 using namespace std;
 
 // -----------------------------------------------------------------------------
-//
-SiStripAnalyzeFedCabling::SiStripAnalyzeFedCabling( const edm::ParameterSet& pset ) 
-{
-  edm::LogVerbatim("FedCabling")
-    << __PRETTY_FUNCTION__ << " Constructing object...";
-}
-
-// -----------------------------------------------------------------------------
-//
-SiStripAnalyzeFedCabling::~SiStripAnalyzeFedCabling() {
-  edm::LogVerbatim("FedCabling")
-    << __PRETTY_FUNCTION__ << " Destructing object...";
-}
-
-// -----------------------------------------------------------------------------
 // 
 void SiStripAnalyzeFedCabling::beginJob( const edm::EventSetup& setup ) {
-  edm::LogVerbatim("FedCabling")
-    << __PRETTY_FUNCTION__;
+  edm::LogVerbatim("FedCabling") 
+    << "[" << __PRETTY_FUNCTION__ << "]"
+    << " Dumping all FED-FEC connections...";
 
-  // Retrieve FED cabling
   edm::ESHandle<SiStripFedCabling> fed_cabling;
   setup.get<SiStripFedCablingRcd>().get( fed_cabling ); 
-
-  // Iterate through connections
-  edm::LogVerbatim("FedCabling") << __PRETTY_FUNCTION__
-				 << " Dumping all FED-FEC connections...";
+  
   int cntr = 0;
   vector<uint16_t>::const_iterator ifed = fed_cabling->feds().begin();
   for ( ; ifed != fed_cabling->feds().end(); ifed++ ) {
@@ -50,10 +32,8 @@ void SiStripAnalyzeFedCabling::beginJob( const edm::EventSetup& setup ) {
     vector<FedChannelConnection>::const_iterator ichan = conns.begin();
     for ( ; ichan != conns.end(); ichan++ ) { 
       if ( ichan->fedId() ) {
-	stringstream ss;
-	ss << "#" << cntr << ", ";
-	ichan->print(ss);
-	edm::LogVerbatim("FedCabling") << ss.str();
+	edm::LogVerbatim("FedCabling")
+	  << "ChannelCounter=" << cntr << " " << *ichan << endl;
 	cntr++;
       }
     } 
@@ -61,37 +41,3 @@ void SiStripAnalyzeFedCabling::beginJob( const edm::EventSetup& setup ) {
   
 }
 
-// -----------------------------------------------------------------------------
-// 
-void SiStripAnalyzeFedCabling::endJob() {
-  edm::LogVerbatim("FedCabling")
-    << __PRETTY_FUNCTION__;
-}
-
-// -----------------------------------------------------------------------------
-//
-void SiStripAnalyzeFedCabling::analyze( const edm::Event& event, 
-					const edm::EventSetup& setup ) {
-  edm::LogVerbatim("FedCabling")
-    << __PRETTY_FUNCTION__
-    << " Analyzing run " << event.id().run() 
-    << " and event " << event.id().event();
-
-
-  // Retrieve FED cabling
-  edm::ESHandle<SiStripFedCabling> fed_cabling;
-  setup.get<SiStripFedCablingRcd>().get( fed_cabling ); 
-
-  // Iterate through connections
-  vector<uint16_t>::const_iterator ifed = fed_cabling->feds().begin();
-  for ( ; ifed != fed_cabling->feds().end(); ifed++ ) {
-    const vector<FedChannelConnection>& conns = fed_cabling->connections( *ifed ); 
-    vector<FedChannelConnection>::const_iterator ichan = conns.begin();
-    for ( ; ichan != conns.end(); ichan++ ) { 
-      if ( ichan->fedId() ) {
-	//@@ anything here?
-      }
-    } 
-  } 
-
-}

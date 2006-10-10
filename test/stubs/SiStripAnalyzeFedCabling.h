@@ -12,12 +12,12 @@ class SiStripAnalyzeFedCabling : public edm::EDAnalyzer {
 
  public:
   
-  SiStripAnalyzeFedCabling( const edm::ParameterSet& );
-  ~SiStripAnalyzeFedCabling();
+  SiStripAnalyzeFedCabling( const edm::ParameterSet& ) {;}
+  ~SiStripAnalyzeFedCabling() {;}
   
   void beginJob( edm::EventSetup const& );
-  void analyze( const edm::Event&, const edm::EventSetup& );
-  void endJob();
+  void analyze( const edm::Event&, const edm::EventSetup& ) {;}
+  void endJob() {;}
   
 };
 
