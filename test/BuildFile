@@ -8,6 +8,7 @@
 <use name=CalibFormats/SiStripObjects>
 <use name=CalibTracker/SiStripConnectivity>
 <use name=DataFormats/DetId>
+<use name=DataFormats/SiStripCommon>
 <use name=DataFormats/SiStripDetId>
 <use name=Geometry/Records>
 <use name=Geometry/CommonTopologies>
@@ -31,6 +32,7 @@
   <use name=CalibFormats/SiStripObjects>
   <use name=CalibTracker/SiStripConnectivity>
   <use name=DataFormats/DetId>
+  <use name=DataFormats/SiStripCommon>
   <use name=DataFormats/SiStripDetId>
   <use name=Geometry/Records>
   <use name=Geometry/CommonTopologies>
