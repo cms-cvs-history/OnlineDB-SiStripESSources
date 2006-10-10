@@ -1,8 +1,6 @@
 es_source FedCablingFrom904ConfigDb = SiStripFedCablingBuilderFromDb {
     untracked bool UsingDb = true
-    untracked string User = "cms_testBeam"
-    untracked string Passwd = "May2004"
-    untracked string Path = "cmsr"
+    untracked string ConfDb = "cms_testBeam/May2004@cmsr"
     untracked string Partition = "TEL2FEDLTC"
     untracked uint32 MajorVersion = 0
     untracked uint32 MinorVersion = 0
