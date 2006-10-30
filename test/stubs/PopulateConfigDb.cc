@@ -1,4 +1,4 @@
-#include "OnlineDB/SiStripESSources/test/stubs/SiStripPopulateConfigDb.h"
+#include "OnlineDB/SiStripESSources/test/stubs/PopulateConfigDb.h"
 // 
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
@@ -7,11 +7,11 @@
 #include "CondFormats/SiStripObjects/interface/FedChannelConnection.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripFecCabling.h"
 //
-#include "DataFormats/SiStripDetId/interface/SiStripControlKey.h"
+#include "DataFormats/SiStripCommon/interface/SiStripFecKey.h"
 #include "DataFormats/DetId/interface/DetId.h"
 #include "DataFormats/SiStripDetId/interface/TECDetId.h"
 //
-#include "Geometry/Records/interface/TrackerDigiGeometryRecord.h"
+//#include "Geometry/Records/interface/TrackerDigiGeometryRecord.h"
 #include "Geometry/CommonTopologies/interface/StripTopology.h"
 #include "Geometry/TrackerGeometryBuilder/interface/TrackerGeometry.h"
 #include "Geometry/TrackerGeometryBuilder/interface/StripGeomDetType.h"
@@ -25,12 +25,12 @@ using namespace std;
 
 // -----------------------------------------------------------------------------
 /** */
-SiStripPopulateConfigDb::SiStripPopulateConfigDb( const edm::ParameterSet& pset ) 
+PopulateConfigDb::PopulateConfigDb( const edm::ParameterSet& pset ) 
   : db_(0),
     maxNumberOfDets_( pset.getUntrackedParameter<int>("MaxNumberOfDets",10) ),
     chansPerFed_( pset.getUntrackedParameter<int>("ChannelsPerFed",96) )
 {
-  edm::LogInfo("SiStripConfigDb") << "[SiStripPopulateConfigDb::SiStripPopulateConfigDb]"
+  edm::LogInfo("SiStripConfigDb") << "[PopulateConfigDb::PopulateConfigDb]"
 				  << " Constructing object...";
 
   if ( chansPerFed_ > 96 ) { chansPerFed_ = 96; }
@@ -56,8 +56,8 @@ SiStripPopulateConfigDb::SiStripPopulateConfigDb( const edm::ParameterSet& pset 
 
 // -----------------------------------------------------------------------------
 /** */
-SiStripPopulateConfigDb::~SiStripPopulateConfigDb() {
-  edm::LogInfo("SiStripCabling") << "[SiStripPopulateConfigDb::~SiStripPopulateConfigDb]"
+PopulateConfigDb::~PopulateConfigDb() {
+  edm::LogInfo("SiStripCabling") << "[PopulateConfigDb::~PopulateConfigDb]"
 				 << " Destructing object...";
   if ( db_ ) { 
     db_->closeDbConnection();
@@ -67,9 +67,9 @@ SiStripPopulateConfigDb::~SiStripPopulateConfigDb() {
 
 // -----------------------------------------------------------------------------
 /** */
-void SiStripPopulateConfigDb::beginJob( const edm::EventSetup& iSetup ) {
-  string method = "SiStripPopulateConfigDb::beginJob";
-  edm::LogInfo("SiStripConfigDb") << "[SiStripPopulateConfigDb::beginJob]"
+void PopulateConfigDb::beginJob( const edm::EventSetup& iSetup ) {
+  string method = "PopulateConfigDb::beginJob";
+  edm::LogInfo("SiStripConfigDb") << "[PopulateConfigDb::beginJob]"
 				  << " Creating TK partitions based on DetIds...";
   
   // Retrieve and organise DetIds according to partition name
@@ -80,7 +80,7 @@ void SiStripPopulateConfigDb::beginJob( const edm::EventSetup& iSetup ) {
   SiStripConfigDb::DcuDetIdMap dcu_detid_map;
   for ( uint16_t ip = 0; ip < partitions.size(); ip++ ) {
     edm::LogInfo("SiStripConfigDb") 
-      << "[SiStripPopulateConfigDb::beginJob]"
+      << "[PopulateConfigDb::beginJob]"
       << " Creating partition '" << partitions[ip].first 
       << "' with " << partitions[ip].second.size() << " dets";
     SiStripFecCabling fec_cabling;
@@ -103,16 +103,16 @@ void SiStripPopulateConfigDb::beginJob( const edm::EventSetup& iSetup ) {
   // Refresh local caches with newly created descriptions
   //refreshLocalCaches();
   
-  edm::LogInfo("SiStripConfigDb") << "[SiStripPopulateConfigDb::beginJob] Finished!";
+  edm::LogInfo("SiStripConfigDb") << "[PopulateConfigDb::beginJob] Finished!";
   
 }
 
 // -----------------------------------------------------------------------------
 /** */ 
-void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
+void PopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
 					      const uint32_t& number_of_dets,
 					      TkPartitions& partitions ) {
-  edm::LogInfo("SiStripConfigDb") << "[SiStripPopulateConfigDb::retrieveDetIds]";
+  edm::LogInfo("SiStripConfigDb") << "[PopulateConfigDb::retrieveDetIds]";
 
   // Define the partitions
   partitions.clear();
@@ -124,9 +124,9 @@ void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
 
   // Retrieve geometry
   edm::ESHandle<TrackerGeometry> pDD;
-  iSetup.get<TrackerDigiGeometryRecord>().get( pDD );
-  edm::LogInfo("SiStripPopulateConfigDb") 
-    << "[SiStripPopulateConfigDb::retrieveDetIds]"
+  //iSetup.get<TrackerDigiGeometryRecord>().get( pDD );
+  edm::LogInfo("PopulateConfigDb") 
+    << "[PopulateConfigDb::retrieveDetIds]"
     << " Iterating through "<< number_of_dets 
     << " of " << pDD->detIds().size()
     << " detectors found in geometry";
@@ -172,7 +172,7 @@ void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
 
       if ( name != "" ) {
 	stringstream ss;
-	ss << "[SiStripPopulateConfigDb::retrieveDetIds]"
+	ss << "[PopulateConfigDb::retrieveDetIds]"
 	   << " Found strip det in partition " << name
 	   << " with number " << ndets
 	   << " and DetId 0x" << hex << setw(8) << setfill('0') << det_id << dec 
@@ -186,7 +186,7 @@ void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
   
   // Some debug
   stringstream ss;
-  ss << "[SiStripPopulateConfigDb::retrieveDetIds]"
+  ss << "[PopulateConfigDb::retrieveDetIds]"
      << " Found " << partitions.size() << " partitions with the following name/nDets:";
   TkPartitions::iterator iter = partitions.begin();
   for ( ; iter != partitions.end(); iter++ ) {
@@ -198,7 +198,7 @@ void SiStripPopulateConfigDb::retrieveDetIds( const edm::EventSetup& iSetup,
 
 // -----------------------------------------------------------------------------
 /** */
-void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number,
+void PopulateConfigDb::createFecCabling( const uint16_t& partition_number,
 						const TkPartitions& partitions,
 						SiStripFecCabling& fec_cabling,
 						SiStripConfigDb::DcuDetIdMap& dcu_detid_map ) {
@@ -206,7 +206,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
   
 
   edm::LogInfo("SiStripConfigDb")
-    << "[SiStripPopulateConfigDb::createFecCabling]"
+    << "[PopulateConfigDb::createFecCabling]"
     << " Creating FEC cabling for partition " << partitions[partition_number].first << "...";
   
   // Some fixed constants
@@ -230,7 +230,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
       else if ( npairs == 3 && ipair == 2 ) { apv_addr = 36; }
       else {
 	edm::LogError("SiStripConfigDb")
-	  << "[SiStripPopulateConfigDb::createFecCabling]"
+	  << "[PopulateConfigDb::createFecCabling]"
 	  << " Unexpected values: nPairs/ipair = "
 	  << npairs << "/" << ipair;
       }
@@ -241,11 +241,11 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
       uint16_t fec_ring  = (imod/(modules_per_ccu*ccus_per_ring)) % rings_per_fec + 1;
       uint16_t ccu_addr  = (imod/(modules_per_ccu)) % ccus_per_ring + 1;
       uint16_t ccu_chan  = (imod) % modules_per_ccu + 26;
-      uint32_t dcu_id = SiStripControlKey::key( fec_crate,
-						fec_slot,
-						fec_ring,
-						ccu_addr,
-						ccu_chan );
+      uint32_t dcu_id = SiStripFecKey::key( fec_crate,
+					    fec_slot,
+					    fec_ring,
+					    ccu_addr,
+					    ccu_chan );
       
       FedChannelConnection conn( fec_crate, fec_slot, fec_ring, ccu_addr, ccu_chan,
 				 apv_addr, apv_addr+1,
@@ -256,7 +256,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
       fec_cabling.addDevices( conn );
 
       LogDebug("SiStripConfigDb")
-	<< "[SiStripPopulateConfigDb::createFecCabling]"
+	<< "[PopulateConfigDb::createFecCabling]"
 	<< " Adding device numbers " << idevice << " and " << idevice+1
 	<< " with crate/FEC/Ring/CCU/Module/APV0/APV1/DcuId/DetId/nApvPairs/FedId/FedCh/Length/DCU/PLL/MUX/LLD: " 
 	<< fec_crate << "/" << fec_slot << "/" << fec_ring << "/" << ccu_addr << "/" << ccu_chan << "/" 
@@ -285,7 +285,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 	      pair<uint16_t,uint16_t> fed_channel = pair<uint16_t,uint16_t>( fed_id, fed_ch );
 	      const_cast<SiStripModule&>(*imod).fedCh( addr.first, fed_channel );
 	      LogDebug("SiStripConfigDb")
-		<< "[SiStripPopulateConfigDb::createFecCabling]"
+		<< "[PopulateConfigDb::createFecCabling]"
 		<< " Setting FED id/channel = " 
 		<< fed_id << "/" << fed_ch
 		<<" for FEC/Ring/CCU/Module/Pair/APVaddr " 
@@ -306,7 +306,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 	    if ( dcu_detid_map.find( imod->dcuId() ) == dcu_detid_map.end() ) {
 	      dcu_detid_map[imod->dcuId()] = dcu;
 	      stringstream ss;
-	      ss << "[SiStripPopulateConfigDb::retrieveDetIds]"
+	      ss << "[PopulateConfigDb::retrieveDetIds]"
 		 << " Created TkDcuInfo object with number " 
 		 << dcu_detid_map.size()
 		 << " and DetId 0x" 
@@ -317,7 +317,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 	      edm::LogInfo("SiStripConfigDb") << ss.str();
 	    } else { 
 	      edm::LogWarning("SiStripConfigDb") 
-		<< "[SiStripPopulateConfigDb::retrieveDetIds]"
+		<< "[PopulateConfigDb::retrieveDetIds]"
 		<< " DCU id already exists in DCU-DetId map!";
 	    }
 	    
@@ -343,8 +343,8 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 
 // // -----------------------------------------------------------------------------
 // //
-// void SiStripPopulateConfigDb::uploadFrontEndDevicesToDb( const TkPartition& ip ) {
-//   edm::LogInfo("FedCabling") << "[SiStripPopulateConfigDb::uploadFrontEndDevicesToDb]"; 
+// void PopulateConfigDb::uploadFrontEndDevicesToDb( const TkPartition& ip ) {
+//   edm::LogInfo("FedCabling") << "[PopulateConfigDb::uploadFrontEndDevicesToDb]"; 
   
 //   // need crate number...
 //   uint32_t crate_number = 1;
@@ -379,17 +379,17 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 
 // // -----------------------------------------------------------------------------
 // //
-// void SiStripPopulateConfigDb::uploadFedCablingToDb( const TkPartition& partition,
+// void PopulateConfigDb::uploadFedCablingToDb( const TkPartition& partition,
 // 						    const SiStripFedCabling& fed_cabling ) {
-//   edm::LogInfo("FedCabling") << "[SiStripPopulateConfigDb::uploadFedDescriptionsToDb]"; 
+//   edm::LogInfo("FedCabling") << "[PopulateConfigDb::uploadFedDescriptionsToDb]"; 
 //   //   db_->deviceFactory()->setInputDBVersion();
 // }
 
 // // -----------------------------------------------------------------------------
 // //
-// void SiStripPopulateConfigDb::uploadFedDescriptionsToDb( const TkPartition& ip, 
+// void PopulateConfigDb::uploadFedDescriptionsToDb( const TkPartition& ip, 
 // 							 const vector<uint16_t>& feds ) {
-//   edm::LogInfo("FedCabling") << "[SiStripPopulateConfigDb::uploadFedDescriptionsToDb]"; 
+//   edm::LogInfo("FedCabling") << "[PopulateConfigDb::uploadFedDescriptionsToDb]"; 
   
 //   db_->deviceFactory()->setUsingStrips(true);
   
@@ -448,7 +448,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 //  * \param deviceFactory - database access
 //  * \param partitionName - partition name
 //  */
-// void SiStripPopulateConfigDb::setConversionFactors ( tkDcuInfoVector vDcuInfoPartition, 
+// void PopulateConfigDb::setConversionFactors ( tkDcuInfoVector vDcuInfoPartition, 
 // 						     DeviceFactory &deviceFactory, 
 // 						     std::string partitionName ) throw (FecExceptionHandler) {
   
@@ -525,7 +525,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 //  * \param vModuleInfo - Module with the index (inherits from TkDcuInfo)
 //  * \param partitionName - name of the partition
 //  */
-// void SiStripPopulateConfigDb::fillIndex ( tkDcuInfoVector vDcuInfoPartition, 
+// void PopulateConfigDb::fillIndex ( tkDcuInfoVector vDcuInfoPartition, 
 // 					  Sgi::hash_map<unsigned long, keyType> &detIdPosition, 
 // 					  std::string partitionName ) {
 
@@ -585,7 +585,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 //  * \param partitionName - name of the partition
 //  * \param crateNumber - crate number useed to change the value of the DCU hard id for the DCU on CCU
 //  */
-// void SiStripPopulateConfigDb::uploadDevices ( tkDcuInfoVector vDcuInfoPartition, 
+// void PopulateConfigDb::uploadDevices ( tkDcuInfoVector vDcuInfoPartition, 
 // 					      Sgi::hash_map<unsigned long, keyType> detIdPosition, 
 // 					      std::string partitionName, 
 // 					      DeviceFactory &deviceFactory,
@@ -906,7 +906,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 
 //     // Some debug
 //     stringstream ss;
-//     ss << "[SiStripPopulateConfigDb::beginJob]"
+//     ss << "[PopulateConfigDb::beginJob]"
 //        << " Found " << dcu_info.size() << " modules in ";
 //     if      ( ipartition == 0 ) { ss << "TIB/TID"; }
 //     else if ( ipartition == 1 ) { ss << "TOB"; }
@@ -927,7 +927,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 //     // Calculate number of channels/CCU  
 //     uint32_t channels_per_ccu = average_modules_per_ring / ccus_per_ring + 1;
 
-//     edm::LogInfo("FedCabling") << "[SiStripPopulateConfigDb::beginJob]"
+//     edm::LogInfo("FedCabling") << "[PopulateConfigDb::beginJob]"
 // 			       << "  Modules per ring: " << average_modules_per_ring;
     
 //     // Create front-end devices
@@ -941,7 +941,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 // 	else if ( dcu_info[imod].nApvPairs_ == 3 && ipair == 1 ) { apv_addr = 34; }
 // 	else if ( dcu_info[imod].nApvPairs_ == 3 && ipair == 2 ) { apv_addr = 36; }
 // 	else {
-// 	  edm::LogError("FedCabling") << "[SiStripPopulateConfigDb::beginJob]"
+// 	  edm::LogError("FedCabling") << "[PopulateConfigDb::beginJob]"
 // 				      << " Unexpected values: nPairs/ipair = "
 // 				      << dcu_info[imod].nApvPairs_ << "/" << ipair;
 // 	}
@@ -952,7 +952,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 // 	uint16_t fec_ring = (imod/(channels_per_ccu*ccus_per_ring)) % rings_per_fec + 1;
 // 	uint16_t ccu_addr = (imod/(channels_per_ccu)) % ccus_per_ring + 1;
 // 	uint16_t ccu_chan = (imod) % channels_per_ccu + 26;
-// 	uint32_t key = SiStripControlKey::key( fec_crate,
+// 	uint32_t key = SiStripFecKey::key( fec_crate,
 // 					       fec_slot,
 // 					       fec_ring,
 // 					       ccu_addr,
@@ -976,7 +976,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 // 				   true ); // lld
 // 	fec_cabling->addDevices( conn );
 // 	idevice += 2;
-// 	LogDebug("FedCabling") << "[SiStripPopulateConfigDb::beginJob]"
+// 	LogDebug("FedCabling") << "[PopulateConfigDb::beginJob]"
 // 			       << " Adding device number " << idevice-2
 // 			       << " with crate/FEC/Ring/CCU/Module/APV0/APV1/DcuId/DetId/nApvPairs/FedId/FedCh/FibreLength/DCU/PLL/MUX/LLD: " 
 // 			       << fec_crate << "/" 
@@ -1024,7 +1024,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 // 	      pair<uint16_t,uint16_t> addr = imod->activeApvPair( (*imod).lldChannel(ipair) );
 // 	      pair<uint16_t,uint16_t> fed_channel = pair<uint16_t,uint16_t>( fed_id, fed_ch );
 // 	      const_cast<SiStripModule&>(*imod).fedCh( addr.first, fed_channel );
-// 	      LogDebug("FedCabling") << "[SiStripPopulateConfigDb::beginJob]"
+// 	      LogDebug("FedCabling") << "[PopulateConfigDb::beginJob]"
 // 				     << " Setting FED id/channel = " 
 // 				     << fed_id << "/" << fed_ch
 // 				     <<" for FEC/Ring/CCU/Module/Pair/APVaddr " 
@@ -1050,7 +1050,7 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 //     vector<FedChannelConnection>::iterator iconn;
 //     for ( iconn = conns.begin(); iconn != conns.end(); iconn++ ) { iconn->print(); }
 //     SiStripFedCabling* cabling = new SiStripFedCabling( conns );
-//     edm::LogInfo("FedCabling") << "[SiStripPopulateConfigDb::beginJob]" 
+//     edm::LogInfo("FedCabling") << "[PopulateConfigDb::beginJob]" 
 // 			       << " Finished building FED cabling map!";
     
 //     delete cabling;
@@ -1074,10 +1074,10 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 
 // -----------------------------------------------------------------------------
 //
-// void SiStripPopulateConfigDb::extractPartitionInfo( vector<SiStripDcuInfo::DcuInfo>& dcu_info ) {
+// void PopulateConfigDb::extractPartitionInfo( vector<SiStripDcuInfo::DcuInfo>& dcu_info ) {
   
 //   stringstream ss;
-//   ss << "[SiStripPopulateConfigDb::extractPartitionInfo]"
+//   ss << "[PopulateConfigDb::extractPartitionInfo]"
 //      << " DetID info: \n";
 //   vector<SiStripDcuInfo::DcuInfo>::const_iterator iter;
 
@@ -1135,10 +1135,10 @@ void SiStripPopulateConfigDb::createFecCabling( const uint16_t& partition_number
 
 // -----------------------------------------------------------------------------
 //
-// void SiStripPopulateConfigDb::createTkDcuInfoDescriptions( vector<SiStripDcuInfo::DcuInfo>& dcu_info ) {
+// void PopulateConfigDb::createTkDcuInfoDescriptions( vector<SiStripDcuInfo::DcuInfo>& dcu_info ) {
   
 //   stringstream ss;
-//   ss << "[SiStripPopulateConfigDb::createTkDcuInfoDescriptions]"
+//   ss << "[PopulateConfigDb::createTkDcuInfoDescriptions]"
 //      << " dcuId/detId/nApvPairs/fibreLength: ";
 //   vector<SiStripDcuInfo::DcuInfo>::const_iterator iter;
 //   for ( iter = dcu_info.begin(); iter != dcu_info.end(); iter++ ) { 

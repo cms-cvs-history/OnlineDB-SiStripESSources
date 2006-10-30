@@ -1,5 +1,5 @@
-#ifndef OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
-#define OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
+#ifndef OnlineDB_SiStripESSources_test_PopulateConfigDb_H
+#define OnlineDB_SiStripESSources_test_PopulateConfigDb_H
 
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EventSetup.h"
@@ -13,7 +13,7 @@
 
 class SiStripFecCabling;
 
-class SiStripPopulateConfigDb : public edm::EDAnalyzer {
+class PopulateConfigDb : public edm::EDAnalyzer {
   
  public:
 
@@ -21,8 +21,8 @@ class SiStripPopulateConfigDb : public edm::EDAnalyzer {
   typedef std::vector< std::pair<uint32_t,uint16_t> > TkPartition;
   typedef std::vector< std::pair<std::string,TkPartition> > TkPartitions;
   
-  SiStripPopulateConfigDb( const edm::ParameterSet& ); 
-  ~SiStripPopulateConfigDb(); 
+  PopulateConfigDb( const edm::ParameterSet& ); 
+  ~PopulateConfigDb(); 
   
   virtual void beginJob( const edm::EventSetup& );
   virtual void analyze( const edm::Event&, const edm::EventSetup& ) {;}
@@ -48,5 +48,5 @@ class SiStripPopulateConfigDb : public edm::EDAnalyzer {
   
 };
 
-#endif // OnlineDB_SiStripESSources_test_SiStripPopulateConfigDb_H
+#endif // OnlineDB_SiStripESSources_test_PopulateConfigDb_H
 

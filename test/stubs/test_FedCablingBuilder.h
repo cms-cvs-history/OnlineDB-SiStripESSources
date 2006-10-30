@@ -1,5 +1,5 @@
-#ifndef OnlineDB_SiStripESSources_test_TestFedCablingBuilder_H
-#define OnlineDB_SiStripESSources_test_TestFedCablingBuilder_H
+#ifndef OnlineDB_SiStripESSources_test_FedCablingBuilder_H
+#define OnlineDB_SiStripESSources_test_FedCablingBuilder_H
 
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EventSetup.h"
@@ -10,16 +10,16 @@
 class SiStripConfigDb;
 
 /**
-   @class TestFedCablingBuilder 
+   @class test_FedCablingBuilder 
    @author R.Bainbridge
    @brief Simple class that tests FED cabling ESSource.
 */
-class TestFedCablingBuilder : public edm::EDAnalyzer {
+class test_FedCablingBuilder : public edm::EDAnalyzer {
 
  public:
   
-  TestFedCablingBuilder( const edm::ParameterSet& );
-  ~TestFedCablingBuilder();
+  test_FedCablingBuilder( const edm::ParameterSet& );
+  ~test_FedCablingBuilder();
   
   void beginJob( edm::EventSetup const& );
   void analyze( const edm::Event&, const edm::EventSetup& ) {;}
@@ -32,5 +32,5 @@ class TestFedCablingBuilder : public edm::EDAnalyzer {
   
 };
 
-#endif // OnlineDB_SiStripESSources_test_TestFedCablingBuilder_H
+#endif // OnlineDB_SiStripESSources_test_FedCablingBuilder_H
 

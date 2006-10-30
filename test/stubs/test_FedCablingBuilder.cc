@@ -1,4 +1,4 @@
-#include "OnlineDB/SiStripESSources/test/stubs/TestFedCablingBuilder.h"
+#include "OnlineDB/SiStripESSources/test/stubs/test_FedCablingBuilder.h"
 //
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 //
@@ -15,11 +15,13 @@ using namespace sistrip;
 
 // -----------------------------------------------------------------------------
 // 
-TestFedCablingBuilder::TestFedCablingBuilder( const edm::ParameterSet& pset ) 
+test_FedCablingBuilder::test_FedCablingBuilder( const edm::ParameterSet& pset ) 
   : db_(0),
     source_( pset.getUntrackedParameter<string>( "Source", "CONNECTIONS" ) )
 {
-  LogTrace(mlCabling_) << __func__ << " Constructing object...";
+  LogDebug(mlCabling_)
+    << "[test_FedCablingBuilder::" << __func__ << "]"
+    << " Constructing object...";
   
   if ( pset.getUntrackedParameter<bool>( "UsingDb", true ) ) {
     db_ = new SiStripConfigDb( pset.getUntrackedParameter<string>("ConfDb",""),
@@ -28,26 +30,32 @@ TestFedCablingBuilder::TestFedCablingBuilder( const edm::ParameterSet& pset )
 			       pset.getUntrackedParameter<unsigned int>("MinorVersion",0) );
     if ( db_ ) { db_->openDbConnection(); }
   } else {
-    edm::LogError(mlCabling_) << " Cannot use database! 'UsingDb' is false!";
+    edm::LogError(mlCabling_)
+      << "[test_FedCablingBuilder::" << __func__ << "]"
+      << " Cannot use database! 'UsingDb' is false!";
   }
   
-  LogTrace(mlCabling_) << " 'SOURCE' configurable set to: " << source_;
+  LogDebug(mlCabling_)
+    << "[test_FedCablingBuilder::" << __func__ << "]"
+    << " 'SOURCE' configurable set to: " << source_;
   
 }
 
 // -----------------------------------------------------------------------------
 // 
-TestFedCablingBuilder::~TestFedCablingBuilder() {
+test_FedCablingBuilder::~test_FedCablingBuilder() {
   if ( db_ ) { 
     db_->closeDbConnection();
     delete db_;
   } 
-  LogTrace(mlCabling_) << __func__ << " Destructing object...";
+  LogDebug(mlCabling_)
+    << "[test_FedCablingBuilder::" << __func__ << "]"
+    << " Destructing object...";
 }
 
 // -----------------------------------------------------------------------------
 // 
-void TestFedCablingBuilder::beginJob( const edm::EventSetup& setup ) {
+void test_FedCablingBuilder::beginJob( const edm::EventSetup& setup ) {
   
   SiStripFecCabling fec_cabling;
   SiStripConfigDb::DcuDetIdMap dcu_detid_map;
@@ -71,7 +79,8 @@ void TestFedCablingBuilder::beginJob( const edm::EventSetup& setup ) {
 						     dcu_detid_map );
   } else { 
     edm::LogError(mlCabling_)
-      << "Unable to build FEC cabling!"
+      << "[test_FedCablingBuilder::" << __func__ << "]"
+      << " Unable to build FEC cabling!"
       << " Unexpected value for 'SOURCE' configurable: " << source_ << endl;
     return;
   }
@@ -79,25 +88,19 @@ void TestFedCablingBuilder::beginJob( const edm::EventSetup& setup ) {
   // Build FED cabling object
   SiStripFedCabling fed_cabling;
   SiStripFedCablingBuilderFromDb::getFedCabling( fec_cabling, fed_cabling );
-
+  
   // Some debug
   const NumberOfDevices& devs = fec_cabling.countDevices();
-  LogTrace(mlCabling_)
-    << "Built SiStripFecCabling object with following devices:" << endl
-    << endl << devs;
-  
-//   int cntr = 0;
-//   vector<uint16_t>::const_iterator ifed = fed_cabling.feds().begin();
-//   for ( ; ifed != fed_cabling.feds().end(); ifed++ ) {
-//     const vector<FedChannelConnection>& conns = fed_cabling.connections( *ifed ); 
-//     vector<FedChannelConnection>::const_iterator ichan = conns.begin();
-//     for ( ; ichan != conns.end(); ichan++ ) { 
-//       if ( ichan->fedId() ) {
-// 	LogTrace(mlCabling_) << "FED Channel connection: " << cntr << endl << *ichan << endl;
-// 	cntr++;
-//       }
-//     } 
-//   } 
+  stringstream ss;
+  ss << "[test_FedCablingBuilder::" << __func__ << "]"
+     << " Built SiStripFecCabling object with following devices:" << endl
+     << endl << devs;
+  LogDebug(mlCabling_) << ss.str();
+
+  stringstream sss;
+  sss << "[test_FedCablingBuilder::" << __func__ << "]" << endl;
+  sss << fed_cabling;
+  LogDebug(mlCabling_) << sss.str();
   
 }
 
