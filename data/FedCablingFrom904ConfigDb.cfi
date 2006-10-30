@@ -1,16 +1,9 @@
 es_source FedCablingFrom904ConfigDb = SiStripFedCablingBuilderFromDb {
     untracked bool UsingDb = true
     untracked string ConfDb = "cms_testBeam/May2004@cmsr"
-    untracked string Partition = "TEL2FEDLTC"
+    untracked string Partition = "TEST_241006"
     untracked uint32 MajorVersion = 0
     untracked uint32 MinorVersion = 0
 }
 
-// untracked bool UsingDb:              [default=true]  switch between using configuration database or xml files
-// untracked string User:               [default=""]    username for database account (used if UsingDb=true)
-// untracked string Passwd:             [default=""]    password for database account (used if UsingDb=true)
-// untracked string Path:               [default=""]    path for database account (used if UsingDb=true)
-// untracked string Partition:          [default=""]    partition for database account (used if UsingDb=true)
-// untracked uint32 MajorVersion        [default=0]     major version for database account (used if UsingDb=true)
-// untracked uint32 MinorVersion        [default=0]     minor version for database account (used if UsingDb=true)
 
