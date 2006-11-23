@@ -1,0 +1,10 @@
+es_source FedCablingFromConfigDb = SiStripFedCablingBuilderFromDb {
+    untracked bool UsingDb = true
+    untracked string ConfDb = ""
+    untracked string Partition = ""
+    untracked uint32 MajorVersion = 0
+    untracked uint32 MinorVersion = 0
+    //untracked string CablingSource = "DEVICES"
+}
+
+
