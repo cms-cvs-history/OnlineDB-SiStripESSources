@@ -1,9 +1,8 @@
 #include "OnlineDB/SiStripESSources/test/stubs/test_DatabaseService.h"
-#include "CondFormats/SiStripObjects/interface/SiStripFedCabling.h"
-#include "DataFormats/SiStripCommon/interface/SiStripConstants.h"
-#include "OnlineDB/SiStripConfigDb/interface/SiStripConfigDb.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
+#include "DataFormats/SiStripCommon/interface/SiStripConstants.h"
+#include "OnlineDB/SiStripConfigDb/interface/SiStripConfigDb.h"
 #include <iostream>
 #include <sstream>
 #include <string>
