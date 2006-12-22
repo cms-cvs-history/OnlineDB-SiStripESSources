@@ -2,7 +2,7 @@
 // Latest tag:  $Name:  $
 // Location:    $Source: $
 
-#include "OnlineDB/SiStripESSources/test/stubs/AnalyzeFedCabling.h"
+#include "OnlineDB/SiStripESSources/test/stubs/test_FedCablingBuilder.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "DataFormats/SiStripCommon/interface/SiStripConstants.h"
@@ -16,10 +16,10 @@ using namespace sistrip;
 
 // -----------------------------------------------------------------------------
 // 
-void AnalyzeFedCabling::beginJob( const edm::EventSetup& setup ) {
+void test_FedCablingBuilder::beginJob( const edm::EventSetup& setup ) {
   
   LogTrace(mlCabling_) 
-    << "[AnalyzeFedCabling::" << __func__ << "]"
+    << "[test_FedCablingBuilder::" << __func__ << "]"
     << " Dumping all FED connections...";
   
   edm::ESHandle<SiStripFedCabling> fed_cabling;

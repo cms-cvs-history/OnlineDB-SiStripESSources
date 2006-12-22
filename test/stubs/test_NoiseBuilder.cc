@@ -2,12 +2,12 @@
 // Latest tag:  $Name:  $
 // Location:    $Source: $
 
-#include "OnlineDB/SiStripESSources/test/stubs/AnalyzePedestals.h"
+#include "OnlineDB/SiStripESSources/test/stubs/test_NoiseBuilder.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "DataFormats/SiStripCommon/interface/SiStripConstants.h"
-#include "CondFormats/DataRecord/interface/SiStripPedestalsRcd.h"
-#include "CondFormats/SiStripObjects/interface/SiStripPedestals.h"
+#include "CondFormats/DataRecord/interface/SiStripNoisesRcd.h"
+#include "CondFormats/SiStripObjects/interface/SiStripNoises.h"
 #include <iostream>
 #include <sstream>
 
@@ -16,45 +16,44 @@ using namespace sistrip;
 
 // -----------------------------------------------------------------------------
 // 
-void AnalyzePedestals::beginJob( const edm::EventSetup& setup ) {
+void test_NoiseBuilder::beginJob( const edm::EventSetup& setup ) {
   
   LogTrace(mlCabling_) 
-    << "[AnalyzePedestals::" << __func__ << "]"
+    << "[test_NoiseBuilder::" << __func__ << "]"
     << " Dumping all FED connections...";
   
-  edm::ESHandle<SiStripPedestals> peds;
-  setup.get<SiStripPedestalsRcd>().get( peds ); 
+  edm::ESHandle<SiStripNoises> noise;
+  setup.get<SiStripNoisesRcd>().get( noise ); 
   
-  // Retrieve DetIds in Pedestals object
+  // Retrieve DetIds in Noise object
   vector<uint32_t> det_ids;
-  peds->getDetIds( det_ids );
+  noise->getDetIds( det_ids );
   
   // Iterate through DetIds
   vector<uint32_t>::const_iterator det_id = det_ids.begin();
   for ( ; det_id != det_ids.end(); det_id++ ) {
 
-    // Retrieve pedestals for given DetId
-    SiStripPedestals::Range range = peds->getRange( *det_id );
+    // Retrieve noise for given DetId
+    SiStripNoises::Range range = noise->getRange( *det_id );
 
     // Check if module has 512 or 768 strips (horrible!)
     uint16_t nstrips = 2*sistrip::STRIPS_PER_FEDCH;
 //     try {
-//       peds->getPed( 2*sistrip::STRIPS_PER_FEDCH, range );
+//       noise->getNoise( 2*sistrip::STRIPS_PER_FEDCH, range );
 //     } catch ( cms::Exception& e ) {
 //       nstrips = 2*sistrip::STRIPS_PER_FEDCH;
 //     }
 
     stringstream ss;
-    ss << "[AnalyzePedestals::" << __func__ << "]"
+    ss << "[test_NoiseBuilder::" << __func__ << "]"
        << " Found " << nstrips
-       << " pedestals for DetId " << *det_id
-       << " (ped/low/high): ";
+       << " noise for DetId " << *det_id
+       << " (noise/disabled): ";
 
-    // Extract peds and low/high thresholds
+    // Extract noise and low/high thresholds
     for ( uint16_t istrip = 0; istrip < nstrips; istrip++ ) {
-      ss << peds->getPed( istrip, range ) << "/"
-	 << peds->getLowTh( istrip, range ) << "/"
-	 << peds->getHighTh( istrip, range ) << ", ";
+      ss << noise->getNoise( istrip, range ) << "/"
+	 << noise->getDisable( istrip, range ) << ", ";
     }
 
     LogTrace(mlCabling_) << ss.str();
