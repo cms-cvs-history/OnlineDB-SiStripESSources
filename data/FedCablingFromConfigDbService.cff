@@ -1,6 +1,0 @@
-include "OnlineDB/SiStripESSources/data/SiStripConfigDb.cfi"
-
-es_source FedCablingFromConfigDbService = SiStripFedCablingBuilderUsingDbService {
-    untracked string CablingSource = "UNDEFINED"
-}
-

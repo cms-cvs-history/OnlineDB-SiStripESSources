@@ -1,0 +1,8 @@
+include "OnlineDB/SiStripConfigDb/data/SiStripConfigDb.cfi"
+replace SiStripConfigDb.UsingDb = false
+replace SiStripConfigDb.InputModuleXml = "/afs/cern.ch/cms/cmt/onlinedev/data/examples/module.xml"
+replace SiStripConfigDb.InputDcuInfoXml = "/afs/cern.ch/cms/cmt/onlinedev/data/examples/dcuinfo.xml"
+
+es_source FedCablingFromConfigDb = SiStripFedCablingBuilderFromDb {
+    untracked string CablingSource = "UNDEFINED"
+}

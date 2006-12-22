@@ -1,0 +1,17 @@
+include "OnlineDB/SiStripConfigDb/data/SiStripConfigDb.cfi"
+replace SiStripConfigDb.UsingDb = false
+replace SiStripConfigDb.InputModuleXml = ""
+replace SiStripConfigDb.InputDcuInfoXml = ""
+replace SiStripConfigDb.InputFecXml = { 
+    "/afs/cern.ch/cms/cmt/onlinedev/data/telescope/20991/fec.xml" 
+}
+replace SiStripConfigDb.InputFedXml = { 
+    "/afs/cern.ch/cms/cmt/onlinedev/data/telescope/20991/fed4.xml",
+    "/afs/cern.ch/cms/cmt/onlinedev/data/telescope/20991/fed5.xml",
+    "/afs/cern.ch/cms/cmt/onlinedev/data/telescope/20991/fed6.xml",
+    "/afs/cern.ch/cms/cmt/onlinedev/data/telescope/20991/fed7.xml"
+}
+
+es_source FedCablingFromConfigDb = SiStripFedCablingBuilderFromDb {
+    untracked string CablingSource = "DEVICES"
+}
