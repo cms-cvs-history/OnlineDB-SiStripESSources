@@ -1,3 +1,7 @@
+// Last commit: $Id: $
+// Latest tag:  $Name:  $
+// Location:    $Source: $
+
 #include "OnlineDB/SiStripESSources/test/stubs/AnalyzeFedCabling.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"

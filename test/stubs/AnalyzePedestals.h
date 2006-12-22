@@ -2,8 +2,8 @@
 // Latest tag:  $Name:  $
 // Location:    $Source: $
 
-#ifndef OnlineDB_SiStripESSources_test_AnalyzeFedCabling_H
-#define OnlineDB_SiStripESSources_test_AnalyzeFedCabling_H
+#ifndef OnlineDB_SiStripESSources_test_AnalyzePedestals_H
+#define OnlineDB_SiStripESSources_test_AnalyzePedestals_H
 
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/EventSetup.h"
@@ -11,15 +11,15 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 /**
-   @class AnalyzeFedCabling 
+   @class AnalyzePedestals 
    @brief Simple class that analyzes Digis produced by RawToDigi unpacker
 */
-class AnalyzeFedCabling : public edm::EDAnalyzer {
+class AnalyzePedestals : public edm::EDAnalyzer {
 
  public:
   
-  AnalyzeFedCabling( const edm::ParameterSet& ) {;}
-  ~AnalyzeFedCabling() {;}
+  AnalyzePedestals( const edm::ParameterSet& ) {;}
+  ~AnalyzePedestals() {;}
   
   void beginJob( edm::EventSetup const& );
   void analyze( const edm::Event&, const edm::EventSetup& ) {;}
@@ -27,5 +27,5 @@ class AnalyzeFedCabling : public edm::EDAnalyzer {
   
 };
 
-#endif // OnlineDB_SiStripESSources_test_AnalyzeFedCabling_H
+#endif // OnlineDB_SiStripESSources_test_AnalyzePedestals_H
 
