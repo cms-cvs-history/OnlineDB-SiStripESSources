@@ -17,7 +17,7 @@
 <use name=OnlineDB/SiStripESSources>
 <use name=boost>
 <library file="stubs/*.cc" name=testOnlineDBSiStripESSources>
-   <flags SEAL_PLUGIN_NAME="testOnlineDBSiStripESSources">
+   <flags EDM_PLUGIN=1>
 </library>
 
 <export>
