@@ -1,5 +1,5 @@
-// Last commit: $Id: SiStripNoiseBuilderFromDb.cc,v 1.3 2007/11/09 14:40:44 bainbrid Exp $
-// Latest tag:  $Name: V01-00-01 $
+// Last commit: $Id: SiStripNoiseBuilderFromDb.cc,v 1.4 2008/03/04 16:42:04 giordano Exp $
+// Latest tag:  $Name: V01-01-00_BRANCH $
 // Location:    $Source: /cvs_server/repositories/CMSSW/CMSSW/OnlineDB/SiStripESSources/src/SiStripNoiseBuilderFromDb.cc,v $
 
 #include "OnlineDB/SiStripESSources/interface/SiStripNoiseBuilderFromDb.h"
@@ -134,7 +134,7 @@ void SiStripNoiseBuilderFromDb::buildNoise( SiStripConfigDb* const db,
     if ( *det_id == sistrip::invalid32_ ) { continue; }
     
     // Iterate through connections for given DetId and fill peds container
-    vector<int16_t> noi;
+    SiStripNoises::InputVector noi;
     const vector<FedChannelConnection>& conns = det_cabling.getConnections(*det_id);
     vector<FedChannelConnection>::const_iterator ipair = conns.begin();
     for ( ; ipair != conns.end(); ipair++ ) {
