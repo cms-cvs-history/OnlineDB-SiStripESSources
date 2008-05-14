@@ -1,5 +1,5 @@
-// Last commit: $Id: SiStripPedestalsBuilderFromDb.cc,v 1.2 2007/03/19 13:23:07 bainbrid Exp $
-// Latest tag:  $Name:  $
+// Last commit: $Id: SiStripPedestalsBuilderFromDb.cc,v 1.3 2007/11/09 14:40:44 bainbrid Exp $
+// Latest tag:  $Name: V01-01-00_BRANCH $
 // Location:    $Source: /cvs_server/repositories/CMSSW/CMSSW/OnlineDB/SiStripESSources/src/SiStripPedestalsBuilderFromDb.cc,v $
 
 #include "OnlineDB/SiStripESSources/interface/SiStripPedestalsBuilderFromDb.h"
@@ -142,7 +142,7 @@ void SiStripPedestalsBuilderFromDb::buildPedestals( SiStripConfigDb* const db,
     if ( *det_id == sistrip::invalid32_ ) { continue; }
     
     // Iterate through connections for given DetId and fill peds container
-    vector<char> peds;
+    SiStripPedestals::InputVector peds;
     const vector<FedChannelConnection>& conns = det_cabling.getConnections(*det_id);
     vector<FedChannelConnection>::const_iterator ipair = conns.begin();
     for ( ; ipair != conns.end(); ipair++ ) {
@@ -156,7 +156,7 @@ void SiStripPedestalsBuilderFromDb::buildPedestals( SiStripConfigDb* const db,
 	  << " out of " << ipair->nApvPairs() << " APV pairs";
 	// Fill Pedestals object with default values
 	for ( uint16_t istrip = 0;istrip < sistrip::STRIPS_PER_FEDCH; istrip++ ){
-	  pedestals.setData( 0.,0.,0.,peds );
+	  pedestals.setData(0.,peds );
 	}
 	continue;
       }
@@ -189,8 +189,6 @@ void SiStripPedestalsBuilderFromDb::buildPedestals( SiStripConfigDb* const db,
 	for ( ; istrip != strip.end(); istrip++ ) {
 	  
 	  pedestals.setData( istrip->getPedestal(),
-			     istrip->getLowThresholdFactor(),
-			     istrip->getHighThresholdFactor(),
 			     peds );
 	  
 	} // strip loop
@@ -198,8 +196,7 @@ void SiStripPedestalsBuilderFromDb::buildPedestals( SiStripConfigDb* const db,
     } // connection loop
     
     // Insert pedestal values into Pedestals object
-    SiStripPedestals::Range range_p( peds.begin(), peds.end() );
-    if ( !pedestals.put( *det_id, range_p ) ) {
+    if ( !pedestals.put( *det_id, peds ) ) {
       edm::LogWarning(mlESSources_)
 	<< "[SiStripPedestalsBuilderFromDb::" << __func__ << "]"
 	<< " Unable to insert values into SiStripPedestals object!"
