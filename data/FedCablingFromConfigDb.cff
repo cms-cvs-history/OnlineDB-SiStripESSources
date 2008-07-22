@@ -1,7 +1,4 @@
 include "OnlineDB/SiStripConfigDb/data/SiStripConfigDb.cfi"
-replace SiStripConfigDb.UsingDb   = true
-replace SiStripConfigDb.ConfDb    = ""
-replace SiStripConfigDb.Partition = ""
 
 es_source FedCablingFromConfigDb = SiStripFedCablingBuilderFromDb {
     untracked string CablingSource = "UNDEFINED"
