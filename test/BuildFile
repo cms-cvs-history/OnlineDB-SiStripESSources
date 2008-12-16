@@ -7,7 +7,6 @@
 <use name=CondFormats/DataRecord>
 <use name=CondFormats/SiStripObjects>
 <use name=CalibFormats/SiStripObjects>
-<use name=CalibTracker/SiStripConnectivity>
 <use name=DataFormats/DetId>
 <use name=DataFormats/SiStripCommon>
 <use name=DataFormats/SiStripDetId>
